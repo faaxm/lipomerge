@@ -6,7 +6,7 @@
 # Files that don't end in ".a" will just be copied over from the first directory.
 #
 # Run it like this:
-#  `python3 lipo-dir-merge.py <arm64-dir-tree> <x64-dir-tree> <universal-output-dir>`
+#  `python3 lipomerge.py <arm64-dir-tree> <x64-dir-tree> <universal-output-dir>`
 
 import os
 import shutil
