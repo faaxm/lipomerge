@@ -1,12 +1,14 @@
 # Copyright (C) Falko Axmann. All rights reserved.
 # Licensed under the GPL v3 license.
-#
-# This script merges two directories containing static libraries for
-# two different architectures into one directory with universal binaries.
-# Files that don't end in ".a" will just be copied over from the first directory.
-#
-# Run it like this:
-#  `python3 lipomerge.py <arm64-dir-tree> <x64-dir-tree> <universal-output-dir>`
+
+"""
+This script merges two directories containing static libraries for
+two different architectures into one directory with universal binaries.
+Files that don't end in ".a" will just be copied over from the first directory.
+
+Run it like this:
+ `python3 lipomerge.py <arm64-dir-tree> <x64-dir-tree> <universal-output-dir>`
+"""
 
 import os
 import shutil
@@ -59,15 +61,28 @@ def is_macho(filepath: str) -> bool:
         return False
 
 
-# Merge the libraries at `src1` and `src2` and create a
-# universal binary at `dst`
 def merge_libs(src1, src2, dst):
+    """
+    Merge the libraries at `src1` and `src2` and create a
+    universal binary at `dst`.
+
+    Args:
+        src1: Path to the first architecture library
+        src2: Path to the second architecture library
+        dst: Destination path for the universal binary
+    """
     subprocess.run(["lipo", "-create", src1, src2, "-output", dst])
 
 
-# Find the library at `src` in the `secondary_path` and then
-# merge the two versions, creating a universal binary at `dst`.
 def find_and_merge_libs(src, dst):
+    """
+    Find the library at `src` in the `secondary_path` and then
+    merge the two versions, creating a universal binary at `dst`.
+
+    Args:
+        src: Path to the library in the primary directory
+        dst: Destination path for the universal binary
+    """
     rel_path = os.path.relpath(src, primary_path)
     lib_in_secondary = os.path.join(secondary_path, rel_path)
 
@@ -78,10 +93,17 @@ def find_and_merge_libs(src, dst):
     merge_libs(src, lib_in_secondary, dst)
 
 
-# Either copy the file at `src` to `dst`, or, if it is a static
-# library, merge it with its version from `secondary_path` and
-# write the universal binary to `dst`.
 def copy_file_or_merge_libs(src, dst, *, follow_symlinks=True):
+    """
+    Either copy the file at `src` to `dst`, or, if it is a static
+    library, merge it with its version from `secondary_path` and
+    write the universal binary to `dst`.
+
+    Args:
+        src: Source file path
+        dst: Destination file path
+        follow_symlinks: Whether to follow symlinks when copying
+    """
     _, file_ext = os.path.splitext(src)
     if not os.path.islink(src) and (file_ext == ".a") or is_macho(src):
         find_and_merge_libs(src, dst)
