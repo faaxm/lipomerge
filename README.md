@@ -1,15 +1,31 @@
-# lipo-dir-merge
+# lipomerge
 
-This script helps you easily build universal static libraries for macOS.
+This package merges two directories containing static libraries for two different architectures into one directory with universal binaries. Files that don't end in ".a" or are mach-O binaries (Typically `.dylib` or executable) will just be copied over from the first directory.
 
-It takes two directory trees, containing the libraries and any other files for each architecture (e.g. x64 and ARM) and then merges them to produce a single directory with the universal binary.
+## Installation
 
-While traversing both directory trees, all files which are static libraries (`.a` files) or mach-O binaries (Typically `.dylib` or executable) are looked up in the second directory tree and both versions are merged using `lipo`. Any other files will be copied into the target directory.
+To install the package, use:
+
+```
+pip install lipomerge
+```
+
+## Usage
 
 Run it like this:
+
 ```
-$ python3 lipo-dir-merge.py <arm64-dir-tree> <x64-dir-tree> <universal-output-dir>
+python3 -m lipomerge <arm64-dir-tree> <x64-dir-tree> <universal-output-dir>
 ```
+
+## Requirements
+
+- macOS
+- `lipo` must be installed on your system.
+
+## License
+
+This project is licensed under the GPL v3 license.
 
 ## Resources
 * [A blog post on using lipo to build universal binaries](https://www.f-ax.de/dev/2021/01/15/build-fat-macos-library.html)
