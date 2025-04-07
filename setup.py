@@ -22,4 +22,5 @@ setup(
             "lipomerge=lipomerge:main",
         ],
     },
+    test_suite="test",
 )
