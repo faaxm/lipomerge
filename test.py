@@ -2,7 +2,7 @@ import os
 import shutil
 import tempfile
 import unittest
-from unittest.mock import patch, MagicMock, call
+from unittest.mock import call, patch
 
 import lipomerge
 
