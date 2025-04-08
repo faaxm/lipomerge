@@ -23,6 +23,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install build
 
+      - name: Update version from git tag
+        run: python buildtools/update_version.py
+
       - name: Build package
         run: python -m build
 
