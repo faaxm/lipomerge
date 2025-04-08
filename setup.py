@@ -20,6 +20,7 @@ setup(
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/faaxm/lipomerge",
+    license_file="License.txt",
     packages=find_packages(),
     py_modules=["lipomerge"],
     classifiers=[
