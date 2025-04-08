@@ -24,7 +24,7 @@ jobs:
 
       - name: Run pre-commit
         id: pre-commit
-        run: pre-commit run --all-files
+        run: pre-commit run --all-files --show-diff-on-failure
         continue-on-error: true
 
       - name: Check pre-commit result
