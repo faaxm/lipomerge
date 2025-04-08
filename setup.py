@@ -1,20 +1,8 @@
 from setuptools import find_packages, setup
-import subprocess
-import re
-
-def get_version_from_git():
-    try:
-        # Get the latest tag
-        tag = subprocess.check_output(['git', 'describe', '--tags', '--abbrev=0'], universal_newlines=True).strip()
-        # Remove 'v' prefix if present and return
-        return re.sub(r'^v', '', tag)
-    except (subprocess.CalledProcessError, FileNotFoundError):
-        # Fallback to a default version if git command fails
-        return "0.0.0"
 
 setup(
     name="lipomerge",
-    version=get_version_from_git(),
+    version="0.1.0",
     author="Falko Axmann",
     description="A tool to merge directories containing static libraries or other binaries into universal binaries.",
     long_description=open("README.md").read(),
