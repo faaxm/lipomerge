@@ -29,6 +29,12 @@ class TestLipomerge(unittest.TestCase):
         with open(os.path.join(self.primary_dir, "regular.txt"), "w") as f:
             f.write("regular text file")
 
+        os.symlink("boom", os.path.join(self.primary_dir, "broken_link"))
+        os.symlink("boom", os.path.join(self.secondary_dir, "broken_link"))
+
+        with open(os.path.join(self.secondary_dir, "only_secondary.txt"), "w") as f:
+            f.write("secondary only")
+
         os.makedirs(os.path.join(self.secondary_dir, "lib"))
         with open(os.path.join(self.secondary_dir, "lib", "libtest.a"), "wb") as f:
             f.write(b"secondary arch library")
@@ -62,6 +68,9 @@ class TestLipomerge(unittest.TestCase):
         with open(os.path.join(self.output_dir, "regular.txt"), "r") as f:
             content = f.read()
         self.assertEqual(content, "regular text file")
+        with open(os.path.join(self.output_dir, "only_secondary.txt"), "r") as f:
+            content = f.read()
+        self.assertEqual(content, "secondary only")
 
     @patch("lipomerge.subprocess.run")
     def test_handle_missing_secondary_file(self, mock_run):
