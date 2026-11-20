@@ -1,6 +1,6 @@
 # lipomerge
 
-This package merges two directories containing static libraries for two different architectures into one directory with universal binaries. Files that don't end in ".a" or are mach-O binaries (Typically `.dylib` or executable) will just be copied over from the first directory.
+This package merges two directories containing libraries for two different architectures into one directory with universal binaries. Files that don't end in ".a" or are mach-O binaries (Typically `.dylib` or executable) will just be copied over from the source directories with precedence to the first directory.
 
 ## Installation
 
