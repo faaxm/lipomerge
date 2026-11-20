@@ -123,7 +123,7 @@ def main():
 
         for filepath in files:
             dst = os.path.join(dest_dir, filepath)
-            if not os.path.exists(dst):
+            if not os.path.lexists(dst):
                 src = os.path.join(root, filepath)
                 shutil.copy2(src, dst, follow_symlinks=False)
 
