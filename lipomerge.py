@@ -115,6 +115,18 @@ def main():
         primary_path, destination_path, copy_function=copy_func, symlinks=True
     )
 
+    # Do a second pass over the secondary_path to copy any missing files
+    for root, _, files in os.walk(secondary_path):
+        rel_dir = os.path.relpath(root, secondary_path)
+        dest_dir = os.path.join(destination_path, rel_dir)
+        os.makedirs(dest_dir, exist_ok=True)
+
+        for filepath in files:
+            dst = os.path.join(dest_dir, filepath)
+            if not os.path.lexists(dst):
+                src = os.path.join(root, filepath)
+                shutil.copy2(src, dst, follow_symlinks=False)
+
 
 if __name__ == "__main__":
     main()
